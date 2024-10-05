@@ -2,7 +2,7 @@ body {
     font-family: 'Montserrat', sans-serif; /* Changed to Montserrat */
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #ffcccb; /* Light red background color */
     color: #333;
     transition: background-color 0.3s;
 }
@@ -38,7 +38,7 @@ nav {
 .tab {
     padding: 10px 20px;
     cursor: pointer;
-    border: 2px solid black;
+    border: 2px solid black; /* Black border for tabs */
     transition: background-color 0.3s;
     color: white; /* White text for the tabs */
 }
@@ -53,24 +53,24 @@ section {
 }
 
 #add-task {
-    background-color: #ffffff;
+    background-color: #ffffff; /* White background for the task section */
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    border: 2px solid black;
+    border: 2px solid black; /* Black border */
 }
 
 #add-task input, #add-task select {
     padding: 0.5rem;
     margin-right: 1rem;
-    border: 1px solid black;
+    border: 1px solid black; /* Black border for inputs and selects */
 }
 
 #add-task button {
     padding: 0.5rem;
     background-color: #ff0000; /* Changed to red */
     color: white;
-    border: none;
+    border: 2px solid black; /* Black border for button */
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -92,11 +92,11 @@ section {
 }
 
 #task-list ul {
-    background-color: white;
+    background-color: white; /* White background for task list */
     padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 2px solid black;
+    border: 2px solid black; /* Black border */
 }
 
 #tasks li, #done-tasks li, #next-week-tasks li, #next-month-tasks li, #missed-tasks li, #upcoming-tasks li {
