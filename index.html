@@ -8,43 +8,60 @@
 </head>
 <body>
     <header>
-        <h1>Welcome to Tracktifier!</h1>
-        <p>Your ultimate task planner for students.</p>
+        <h1>Tracktifier</h1>
     </header>
 
-    <section id="features">
-        <h2>Features</h2>
-        <ul>
-            <li>Task Management</li>
-            <li>Deadline Tracking</li>
-            <li>Reminders</li>
+    <nav>
+        <ul id="tabs">
+            <li class="tab active" onclick="showTab('today')">Today</li>
+            <li class="tab" onclick="showTab('next-week')">Next Week</li>
+            <li class="tab" onclick="showTab('next-month')">Next Month</li>
+            <li class="tab" onclick="showTab('done')">Done Tasks</li>
+            <li class="tab" onclick="showTab('missed')">Missed Tasks</li>
+            <li class="tab" onclick="showTab('upcoming')">Upcoming Tasks</li>
         </ul>
+    </nav>
+
+    <section id="add-task">
+        <h2>Add a Task</h2>
+        <form id="task-form">
+            <input type="text" id="task-name" placeholder="Task Name (e.g., Homework)" required title="Please input the task name here.">
+            <input type="date" id="task-deadline" required title="Please select the deadline for your task.">
+            <input type="time" id="task-time" required title="Please select the time for your task deadline.">
+            <select id="task-type" required title="Select the type of task to set specific reminders.">
+                <option value="">Select Task Type</option>
+                <option value="large">Large Project</option>
+                <option value="medium">Medium Task</option>
+                <option value="small">Small Task</option>
+                <option value="group">Group Task</option>
+            </select>
+            <button type="submit">Add Task</button>
+        </form>
     </section>
 
-<section id="add-task">
-    <h2>Add a Task</h2>
-    <form id="task-form">
-        <input type="text" id="task-name" placeholder="Task Name (e.g., Homework)" required title="Please input the task name here.">
-        <input type="date" id="task-deadline" required title="Please select the deadline for your task.">
-        <input type="time" id="task-time" required title="Please select the time for your task deadline.">
-        <select id="task-type" required title="Select the type of task to set specific reminders.">
-            <option value="">Select Task Type</option>
-            <option value="large">Large Project</option>
-            <option value="medium">Medium Task</option>
-            <option value="small">Small Task</option>
-            <option value="group">Group Task</option>
-        </select>
-        <button type="submit">Add Task</button>
-    </form>
-</section>
-
-
-
     <section id="task-list">
-        <h2>Task List</h2>
-        <ul id="tasks">
-            <!-- Tasks will be displayed here -->
-        </ul>
+        <h2>Tasks</h2>
+        <div id="today" class="tab-content active">
+            <ul id="tasks"></ul>
+        </div>
+        <div id="next-week" class="tab-content">
+            <ul id="next-week-tasks"></ul>
+        </div>
+        <div id="next-month" class="tab-content">
+            <ul id="next-month-tasks"></ul>
+        </div>
+        <div id="done" class="tab-content">
+            <h3>Done Tasks</h3>
+            <ul id="done-tasks"></ul>
+        </div>
+        <div id="missed" class="tab-content">
+            <h3>Missed Tasks</h3>
+            <ul id="missed-tasks"></ul>
+        </div>
+        <div id="upcoming" class="tab-content">
+            <h3>Upcoming Tasks</h3>
+            <ul id="upcoming-tasks"></ul>
+        </div>
     </section>
 
     <footer>
