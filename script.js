@@ -1,47 +1,42 @@
-document.getElementById('task-form').addEventListener('submit', function(e) {
-    e.preventDefault();
+const taskForm = document.getElementById('task-form');
+const tasksList = document.getElementById('tasks');
+const doneTasksList = document.getElementById('done-tasks');
+const tabs = document.querySelectorAll('.tab');
+const tabContents = document.querySelectorAll('.tab-content');
+
+taskForm.addEventListener('submit', function(event) {
+    event.preventDefault();
 
     const taskName = document.getElementById('task-name').value;
     const taskDeadline = document.getElementById('task-deadline').value;
     const taskTime = document.getElementById('task-time').value;
     const taskType = document.getElementById('task-type').value;
 
-    if (taskName && taskDeadline && taskTime && taskType) {
-        const deadlineDateTime = new Date(`${taskDeadline}T${taskTime}`);
-        const reminders = getReminders(deadlineDateTime, taskType);
+    const taskItem = document.createElement('li');
+    taskItem.innerHTML = `
+        <input type="checkbox" onchange="markAsDone(this)"> 
+        ${taskName} - ${taskDeadline} ${taskTime} (${taskType})`;
 
-        const taskItem = document.createElement('li');
-        taskItem.textContent = `${taskName} - Deadline: ${taskDeadline} ${taskTime} - Reminders: ${reminders.join(', ')}`;
-        document.getElementById('tasks').appendChild(taskItem);
+    tasksList.appendChild(taskItem);
 
-        document.getElementById('task-form').reset();
-    } else {
-        alert("Please fill out all fields.");
-    }
+    // Clear input fields
+    taskForm.reset();
 });
 
-function getReminders(deadline, taskType) {
-    const reminders = [];
-    const oneDay = 24 * 60 * 60 * 1000; // One day in milliseconds
-
-    switch (taskType) {
-        case 'large':
-            reminders.push(new Date(deadline.getTime() - 7 * oneDay).toLocaleString());
-            reminders.push(new Date(deadline.getTime() - 2 * oneDay).toLocaleString());
-            break;
-        case 'medium':
-            reminders.push(new Date(deadline.getTime() - 3 * oneDay).toLocaleString());
-            break;
-        case 'small':
-            reminders.push(new Date(deadline.getTime() - 1 * oneDay).toLocaleString());
-            break;
-        case 'group':
-            const daysInAdvance = Math.floor(Math.random() * (5 - 3 + 1)) + 3; // Random between 3 and 5 days
-            reminders.push(new Date(deadline.getTime() - daysInAdvance * oneDay).toLocaleString());
-            break;
-        default:
-            break;
-    }
-    
-    return reminders.map(date => date.replace(',', ' at ')); // Format reminders
+function markAsDone(checkbox) {
+    const taskItem = checkbox.parentElement;
+    doneTasksList.appendChild(taskItem);
+    checkbox.checked = false; // Uncheck the checkbox after moving it
 }
+
+// Tab functionality
+function showTab(tabId) {
+    tabs.forEach(tab => tab.classList.remove('active'));
+    tabContents.forEach(content => content.classList.remove('active'));
+
+    document.querySelector(`.tab-content#${tabId}`).classList.add('active');
+    document.querySelector(`.tab.${tabId}`).classList.add('active');
+}
+
+// Initialize the default active tab
+showTab('today');
