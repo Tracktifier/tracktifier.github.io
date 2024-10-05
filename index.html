@@ -5,7 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tracktifier</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"> <!-- Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Brush+Script+MT&display=swap" rel="stylesheet"> <!-- Brush Script MT Font -->
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif; /* Set font for body */
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: black; /* Header background */
+            color: red; /* Header text color */
+            text-align: center;
+            padding: 1rem;
+            font-family: 'Brush Script MT', cursive; /* Title font */
+            font-size: 3rem; /* Title font size */
+        }
+
+        nav {
+            float: left; /* Align nav to the left */
+            width: 200px; /* Set width for the nav */
+            background-color: black; /* Background color of nav */
+            height: 100vh; /* Full height */
+            position: fixed; /* Fixed position */
+            padding: 1rem; /* Padding */
+        }
+
+        #tabs {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .tab {
+            margin: 1rem 0; /* Margin between tabs */
+            padding: 1rem;
+            color: red; /* Tab text color */
+            cursor: pointer; /* Pointer on hover */
+            background-color: transparent; /* Transparent background */
+            border: 1px solid red; /* Red border */
+            border-radius: 5px; /* Rounded corners */
+            transition: background-color 0.3s; /* Transition effect */
+        }
+
+        .tab:hover {
+            background-color: red; /* Change background on hover */
+            color: white; /* Change text color on hover */
+        }
+
+        section {
+            margin-left: 220px; /* Margin for the section */
+            padding: 2rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: black; /* Footer background color */
+            color: white; /* Footer text color */
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
 </head>
 <body>
     <header>
