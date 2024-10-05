@@ -186,3 +186,15 @@ select[title]:hover::after {
         width: 100%; /* Make button full width */
     }
 }
+
+#credits {
+    background-color: #F5F5DC; /* Beige background for better visibility */
+    padding: 1rem;
+    border: 2px solid black; /* Optional border for emphasis */
+}
+
+#credits h2,
+#credits p {
+    color: black; /* Ensure text color is black */
+}
+
