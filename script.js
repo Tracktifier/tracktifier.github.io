@@ -62,15 +62,17 @@ function displayTasks() {
     const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
 
     tasks.forEach(task => {
+        const taskElement = createTaskElement(task); // Create task element once
+
         if (task.done) {
-            doneTasksList.appendChild(createTaskElement(task)); // Add to done tasks if marked as done
+            doneTasksList.appendChild(taskElement); // Add to done tasks if marked as done
         } else {
             if (task.deadline < currentDate) {
                 // If the task's deadline is missed
-                missedTasksList.appendChild(createTaskElement(task)); // Add to missed tasks
+                missedTasksList.appendChild(taskElement); // Add to missed tasks
             } else {
-                tasksList.appendChild(createTaskElement(task)); // Add to main task list if not done
-                upcomingTasksList.appendChild(createTaskElement(task).cloneNode(true)); // Add a copy to upcoming tasks
+                tasksList.appendChild(taskElement); // Add to main task list if not done
+                upcomingTasksList.appendChild(taskElement.cloneNode(true)); // Add a copy to upcoming tasks
             }
         }
     });
@@ -94,7 +96,7 @@ function markAsDone(checkbox) {
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     const updatedTasks = tasks.map(task => {
         if (task.name === taskName) {
-            task.done = true; // Mark the task as done
+            task.done = !task.done; // Toggle the task as done or not
         }
         return task;
     });
