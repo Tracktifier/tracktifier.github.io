@@ -59,15 +59,17 @@ function displayTasks() {
     upcomingTasksList.innerHTML = '';
 
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
+    const currentDateTime = new Date(); // Get current date and time
 
     tasks.forEach(task => {
+        const taskDeadlineDateTime = new Date(`${task.deadline}T${task.time}`); // Create a Date object for the task's deadline
+
         const taskElement = createTaskElement(task); // Create task element once
 
         if (task.done) {
             doneTasksList.appendChild(taskElement); // Add to done tasks if marked as done
         } else {
-            if (task.deadline < currentDate) {
+            if (taskDeadlineDateTime < currentDateTime) {
                 // If the task's deadline is missed
                 missedTasksList.appendChild(taskElement); // Add to missed tasks
             } else {
