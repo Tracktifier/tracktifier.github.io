@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tracktifier</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> <!-- Google Font -->
 </head>
 <body>
     <header>
@@ -19,6 +20,7 @@
             <li class="tab" onclick="showTab('done')">Done Tasks</li>
             <li class="tab" onclick="showTab('missed')">Missed Tasks</li>
             <li class="tab" onclick="showTab('upcoming')">Upcoming Tasks</li>
+            <li class="tab" onclick="showTab('new-projects')">New Projects</li> <!-- New Tab -->
         </ul>
     </nav>
 
@@ -61,6 +63,10 @@
         <div id="upcoming" class="tab-content">
             <h3>Upcoming Tasks</h3>
             <ul id="upcoming-tasks"></ul>
+        </div>
+        <div id="new-projects" class="tab-content">
+            <h3>New Projects</h3>
+            <ul id="new-projects-tasks"></ul> <!-- Upcoming tasks for New Projects -->
         </div>
     </section>
 
