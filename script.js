@@ -1,6 +1,7 @@
 const taskForm = document.getElementById('task-form');
 const tasksList = document.getElementById('tasks');
 const doneTasksList = document.getElementById('done-tasks');
+const upcomingTasksList = document.getElementById('upcoming-tasks'); // Upcoming tasks list
 const tabs = document.querySelectorAll('.tab');
 const tabContents = document.querySelectorAll('.tab-content');
 
@@ -18,8 +19,12 @@ taskForm.addEventListener('submit', function(e) {
             <input type="checkbox" onchange="markAsDone(this)"> 
             ${taskName} - Deadline: ${taskDeadline} ${taskTime} (${taskType})
         `;
-        
+
         tasksList.appendChild(taskItem);
+
+        // Add to upcoming tasks list (you can modify this logic to fit your needs)
+        upcomingTasksList.appendChild(taskItem.cloneNode(true)); // Add a copy of the task item to upcoming tasks
+
         taskForm.reset();
     } else {
         alert("Please fill out both fields.");
