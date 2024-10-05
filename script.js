@@ -6,14 +6,13 @@ const upcomingTasksList = document.getElementById('upcoming-tasks'); // Upcoming
 const tabs = document.querySelectorAll('.tab');
 const tabContents = document.querySelectorAll('.tab-content');
 
-// Set how many days in advance to notify (1 day in this example)
-const notifyDaysInAdvance = 1;
+// Request permission for notifications
+if (Notification.permission !== 'granted') {
+    Notification.requestPermission();
+}
 
 // Load tasks from Local Storage on page load
-document.addEventListener('DOMContentLoaded', function() {
-    loadTasks();
-    checkDeadlines(); // Check deadlines when the page loads
-});
+document.addEventListener('DOMContentLoaded', loadTasks);
 
 taskForm.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -57,25 +56,6 @@ function loadTasks() {
     });
 }
 
-// Function to check for upcoming deadlines
-function checkDeadlines() {
-    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    const currentDate = new Date();
-
-    tasks.forEach(task => {
-        const taskDeadline = new Date(`${task.deadline}T${task.time}`); // Combine date and time
-        const timeDiff = (taskDeadline - currentDate) / (1000 * 60 * 60 * 24); // Difference in days
-
-        // If the deadline is within the specified notifyDaysInAdvance and the task is not done
-        if (timeDiff <= notifyDaysInAdvance && !task.done) {
-            alert(`Reminder: The deadline for "${task.name}" is in ${Math.ceil(timeDiff)} day(s)!`);
-        }
-    });
-}
-
-// Call checkDeadlines periodically (every hour in this example)
-setInterval(checkDeadlines, 60 * 60 * 1000); // Check every hour
-
 function displayTasks() {
     // Clear the lists
     tasksList.innerHTML = '';
@@ -85,6 +65,7 @@ function displayTasks() {
 
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
+    const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // Get current time in HH:MM format
 
     tasks.forEach(task => {
         if (task.done) {
@@ -96,6 +77,14 @@ function displayTasks() {
             } else {
                 tasksList.appendChild(createTaskElement(task)); // Add to main task list if not done
                 upcomingTasksList.appendChild(createTaskElement(task).cloneNode(true)); // Add a copy to upcoming tasks
+
+                // Check if the deadline is within the next hour for notification
+                const taskDeadlineDateTime = new Date(`${task.deadline}T${task.time}`);
+                const oneHourFromNow = new Date(Date.now() + 60 * 60 * 1000);
+
+                if (taskDeadlineDateTime <= oneHourFromNow) {
+                    showNotification(task);
+                }
             }
         }
     });
@@ -125,6 +114,20 @@ function markAsDone(checkbox) {
 
     localStorage.setItem('tasks', JSON.stringify(updatedTasks)); // Update Local Storage
     displayTasks(); // Refresh the task display
+}
+
+// Function to show notifications
+function showNotification(task) {
+    if (Notification.permission === 'granted') {
+        const notification = new Notification('Task Reminder', {
+            body: `Reminder: ${task.name} is due on ${task.deadline} at ${task.time}`,
+            icon: 'icon.png' // Optional: add a path to an icon
+        });
+
+        notification.onclick = function () {
+            window.focus(); // Focus the window when the notification is clicked
+        };
+    }
 }
 
 // Tab functionality
