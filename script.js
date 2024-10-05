@@ -1,6 +1,7 @@
 const taskForm = document.getElementById('task-form');
 const tasksList = document.getElementById('tasks');
 const doneTasksList = document.getElementById('done-tasks');
+const missedTasksList = document.getElementById('missed-tasks'); // Missed tasks list
 const upcomingTasksList = document.getElementById('upcoming-tasks'); // Upcoming tasks list
 const tabs = document.querySelectorAll('.tab');
 const tabContents = document.querySelectorAll('.tab-content');
@@ -8,7 +9,7 @@ const tabContents = document.querySelectorAll('.tab-content');
 // Load tasks from Local Storage on page load
 document.addEventListener('DOMContentLoaded', loadTasks);
 
-taskForm.addEventListener('submit', function(e) {
+taskForm.addEventListener('submit', function (e) {
     e.preventDefault();
 
     const taskName = document.getElementById('task-name').value;
@@ -54,27 +55,34 @@ function displayTasks() {
     // Clear the lists
     tasksList.innerHTML = '';
     doneTasksList.innerHTML = '';
+    missedTasksList.innerHTML = ''; // Clear missed tasks list
     upcomingTasksList.innerHTML = '';
 
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
+
     tasks.forEach(task => {
-        displayTask(task);
+        if (task.done) {
+            doneTasksList.appendChild(createTaskElement(task)); // Add to done tasks if marked as done
+        } else {
+            if (task.deadline < currentDate) {
+                // If the task's deadline is missed
+                missedTasksList.appendChild(createTaskElement(task)); // Add to missed tasks
+            } else {
+                tasksList.appendChild(createTaskElement(task)); // Add to main task list if not done
+                upcomingTasksList.appendChild(createTaskElement(task).cloneNode(true)); // Add a copy to upcoming tasks
+            }
+        }
     });
 }
 
-function displayTask(task) {
+function createTaskElement(task) {
     const taskItem = document.createElement('li');
     taskItem.innerHTML = `
         <input type="checkbox" onchange="markAsDone(this)" ${task.done ? 'checked' : ''}>
         ${task.name} - Deadline: ${task.deadline} ${task.time} (${task.type})
     `;
-
-    if (task.done) {
-        doneTasksList.appendChild(taskItem); // Add to done tasks if marked as done
-    } else {
-        tasksList.appendChild(taskItem); // Add to main task list if not done
-        upcomingTasksList.appendChild(taskItem.cloneNode(true)); // Add a copy of the task item to upcoming tasks
-    }
+    return taskItem;
 }
 
 function markAsDone(checkbox) {
@@ -86,8 +94,6 @@ function markAsDone(checkbox) {
     const updatedTasks = tasks.map(task => {
         if (task.name === taskName) {
             task.done = true; // Mark the task as done
-            doneTasksList.appendChild(taskItem); // Move to done tasks list
-            checkbox.checked = false; // Uncheck the checkbox
         }
         return task;
     });
