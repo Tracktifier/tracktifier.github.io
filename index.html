@@ -21,14 +21,23 @@
         </ul>
     </section>
 
-    <section id="add-task">
-        <h2>Add a Task</h2>
-        <form id="task-form">
-            <input type="text" id="task-name" placeholder="Task Name" required>
-            <input type="date" id="task-deadline" required>
-            <button type="submit">Add Task</button>
-        </form>
-    </section>
+  <section id="add-task">
+    <h2>Add a Task</h2>
+    <form id="task-form">
+        <input type="text" id="task-name" placeholder="Task Name" required>
+        <input type="date" id="task-deadline" required>
+        <input type="time" id="task-time" required>
+        <select id="task-type" required>
+            <option value="">Select Task Type</option>
+            <option value="large">Large Project</option>
+            <option value="medium">Medium Task</option>
+            <option value="small">Small Task</option>
+            <option value="group">Group Task</option>
+        </select>
+        <button type="submit">Add Task</button>
+    </form>
+</section>
+
 
     <section id="task-list">
         <h2>Task List</h2>
