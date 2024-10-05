@@ -1,19 +1,19 @@
 body {
-    font-family: 'Montserrat', sans-serif; /* Changed to Montserrat */
+    font-family: 'Montserrat', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #F5F5DC; /* Beige background color */
+    background-color: #F5F5DC; /* Beige background */
     color: #333;
     transition: background-color 0.3s;
 }
 
 header {
-    background-color: #ff0000; /* Red background for header */
+    background-color: #ff0000;
     color: white;
     text-align: center;
     padding: 1rem;
     border-bottom: 4px solid black;
-    font-family: 'Brush Script MT', cursive; /* Changed to Brush Script MT */
+    font-family: 'Brush Script MT', cursive;
 }
 
 h1, h2 {
@@ -21,17 +21,17 @@ h1, h2 {
 }
 
 nav {
-    background-color: #F5F5DC; /* Beige background for navigation */
+    background-color: #F5F5DC; /* Beige background for nav */
     border: 2px solid black;
-    position: fixed; /* Fixed position for the navigation */
-    width: 200px; /* Fixed width for the navigation */
-    height: 100%; /* Full height for the navigation */
-    padding-top: 1rem; /* Add padding on top for spacing */
+    position: fixed;
+    width: 200px;
+    height: 100%;
+    padding-top: 1rem;
 }
 
 #tabs {
     display: flex;
-    flex-direction: column; /* Ensure tabs are displayed in a column */
+    flex-direction: column;
     list-style: none;
     padding: 0;
 }
@@ -39,10 +39,10 @@ nav {
 .tab {
     padding: 10px 20px;
     cursor: pointer;
-    border: 2px solid black; /* Black border for tabs */
+    border: 2px solid black;
     transition: background-color 0.3s;
-    color: white; /* White text for the tabs */
-    margin-bottom: 10px; /* Add space between tabs */
+    color: white;
+    margin-bottom: 10px;
 }
 
 .tab:hover, .tab.active {
@@ -50,29 +50,29 @@ nav {
 }
 
 section {
-    margin-left: 220px; /* Add margin to prevent overlap with the nav */
+    margin-left: 220px;
     margin-top: 2rem;
 }
 
 #add-task {
-    background-color: #ffffff; /* White background for the task section */
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    border: 2px solid black; /* Black border */
+    border: 2px solid black;
 }
 
 #add-task input, #add-task select {
     padding: 0.5rem;
     margin-right: 1rem;
-    border: 1px solid black; /* Black border for inputs and selects */
+    border: 1px solid black;
 }
 
 #add-task button {
     padding: 0.5rem;
-    background-color: #ff0000; /* Changed to red */
+    background-color: #ff0000;
     color: white;
-    border: 2px solid black; /* Black border for button */
+    border: 2px solid black;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -94,11 +94,11 @@ section {
 }
 
 #task-list ul {
-    background-color: white; /* White background for task list */
+    background-color: white;
     padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 2px solid black; /* Black border */
+    border: 2px solid black;
 }
 
 #tasks li, #done-tasks li, #next-week-tasks li, #next-month-tasks li, #missed-tasks li, #upcoming-tasks li {
@@ -109,7 +109,7 @@ section {
 footer {
     text-align: center;
     padding: 1rem;
-    background-color: #ff0000; /* Changed to red */
+    background-color: #ff0000;
     color: white;
     position: fixed;
     width: 100%;
@@ -131,4 +131,58 @@ select[title]:hover::after {
     z-index: 1000;
     margin-top: 5px;
     font-size: 0.8em;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    nav {
+        width: 100%;
+        height: auto;
+        position: relative; /* Make navigation not fixed */
+    }
+
+    section {
+        margin-left: 0;
+    }
+
+    #add-task, #task-list ul {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .tab {
+        padding: 8px 16px; /* Adjust tab padding for mobile */
+        font-size: 14px; /* Reduce font size for mobile */
+    }
+
+    #tabs {
+        flex-direction: row; /* Stack tabs horizontally on mobile */
+        overflow-x: auto; /* Allow scrolling if there are too many tabs */
+    }
+
+    footer {
+        position: relative; /* Make footer static on mobile */
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem; /* Adjust header font size on small screens */
+    }
+
+    .tab {
+        font-size: 12px; /* Reduce tab font size for small screens */
+        padding: 6px 12px;
+    }
+
+    #add-task input, #add-task select {
+        margin-bottom: 1rem; /* Stack input fields vertically */
+        display: block;
+        width: 100%;
+    }
+
+    #add-task button {
+        width: 100%; /* Make button full width */
+    }
 }
