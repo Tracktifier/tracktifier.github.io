@@ -2,7 +2,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #F5F5DC; /* Beige background */
+    background: linear-gradient(to right, #ff69b4, #9370db); /* Gradient background from pink to purple */
     color: #333;
     transition: background-color 0.3s;
 }
