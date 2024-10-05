@@ -6,11 +6,6 @@ const upcomingTasksList = document.getElementById('upcoming-tasks'); // Upcoming
 const tabs = document.querySelectorAll('.tab');
 const tabContents = document.querySelectorAll('.tab-content');
 
-// Request permission for notifications
-if (Notification.permission !== 'granted') {
-    Notification.requestPermission();
-}
-
 // Load tasks from Local Storage on page load
 document.addEventListener('DOMContentLoaded', loadTasks);
 
@@ -65,7 +60,6 @@ function displayTasks() {
 
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
-    const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // Get current time in HH:MM format
 
     tasks.forEach(task => {
         if (task.done) {
@@ -77,14 +71,6 @@ function displayTasks() {
             } else {
                 tasksList.appendChild(createTaskElement(task)); // Add to main task list if not done
                 upcomingTasksList.appendChild(createTaskElement(task).cloneNode(true)); // Add a copy to upcoming tasks
-
-                // Check if the deadline is within the next hour for notification
-                const taskDeadlineDateTime = new Date(`${task.deadline}T${task.time}`);
-                const oneHourFromNow = new Date(Date.now() + 60 * 60 * 1000);
-
-                if (taskDeadlineDateTime <= oneHourFromNow) {
-                    showNotification(task);
-                }
             }
         }
     });
@@ -95,6 +81,7 @@ function createTaskElement(task) {
     taskItem.innerHTML = `
         <input type="checkbox" onchange="markAsDone(this)" ${task.done ? 'checked' : ''}>
         ${task.name} - Deadline: ${task.deadline} ${task.time} (${task.type})
+        <button class="delete-button" onclick="deleteTask('${task.name}')">Delete</button>
     `;
     return taskItem;
 }
@@ -116,18 +103,13 @@ function markAsDone(checkbox) {
     displayTasks(); // Refresh the task display
 }
 
-// Function to show notifications
-function showNotification(task) {
-    if (Notification.permission === 'granted') {
-        const notification = new Notification('Task Reminder', {
-            body: `Reminder: ${task.name} is due on ${task.deadline} at ${task.time}`,
-            icon: 'icon.png' // Optional: add a path to an icon
-        });
+function deleteTask(taskName) {
+    // Get tasks from Local Storage
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    const updatedTasks = tasks.filter(task => task.name !== taskName); // Remove the task
 
-        notification.onclick = function () {
-            window.focus(); // Focus the window when the notification is clicked
-        };
-    }
+    localStorage.setItem('tasks', JSON.stringify(updatedTasks)); // Update Local Storage
+    displayTasks(); // Refresh the task display
 }
 
 // Tab functionality
