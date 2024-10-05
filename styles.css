@@ -1,5 +1,5 @@
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Montserrat', sans-serif; /* Ensure the body font is also Montserrat */
     margin: 0;
     padding: 0;
     background: linear-gradient(to right, #ff69b4, #9370db); /* Gradient background from pink to purple */
@@ -13,7 +13,7 @@ header {
     text-align: center;
     padding: 1rem;
     border-bottom: 4px solid black;
-    font-family: 'Montserrat', cursive;
+    font-family: 'Montserrat', sans-serif; /* Montserrat font */
 }
 
 h1, h2 {
