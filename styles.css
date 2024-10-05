@@ -26,11 +26,12 @@ nav {
     position: fixed; /* Fixed position for the navigation */
     width: 200px; /* Fixed width for the navigation */
     height: 100%; /* Full height for the navigation */
+    padding-top: 1rem; /* Add padding on top for spacing */
 }
 
 #tabs {
     display: flex;
-    flex-direction: column; /* Change to vertical layout */
+    flex-direction: column; /* Ensure tabs are displayed in a column */
     list-style: none;
     padding: 0;
 }
@@ -41,6 +42,7 @@ nav {
     border: 2px solid black; /* Black border for tabs */
     transition: background-color 0.3s;
     color: white; /* White text for the tabs */
+    margin-bottom: 10px; /* Add space between tabs */
 }
 
 .tab:hover, .tab.active {
