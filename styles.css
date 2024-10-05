@@ -2,13 +2,13 @@ body {
     font-family: 'Montserrat', sans-serif; /* Changed to Montserrat */
     margin: 0;
     padding: 0;
-    background-color: #ffccc; /* Light red background color */
+    background-color: #F5F5DC; /* Beige background color */
     color: #333;
     transition: background-color 0.3s;
 }
 
 header {
-    background-color: #ff0000; /* Changed to red */
+    background-color: #ff0000; /* Red background for header */
     color: white;
     text-align: center;
     padding: 1rem;
@@ -21,7 +21,7 @@ h1, h2 {
 }
 
 nav {
-    background-color: #F5F5DC; /* Changed to black */
+    background-color: #F5F5DC; /* Beige background for navigation */
     border: 2px solid black;
     position: fixed; /* Fixed position for the navigation */
     width: 200px; /* Fixed width for the navigation */
