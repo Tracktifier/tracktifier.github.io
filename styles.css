@@ -41,12 +41,13 @@ nav {
     cursor: pointer;
     border: 2px solid black;
     transition: background-color 0.3s;
-    color: black;
+    color: black; /* Changed text color to black */
     margin-bottom: 10px;
 }
 
 .tab:hover, .tab.active {
     background-color: #990000; /* Darker red for active and hover states */
+    color: white; /* White text color for contrast on hover/active */
 }
 
 section {
