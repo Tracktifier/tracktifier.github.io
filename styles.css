@@ -199,3 +199,30 @@ select[title]:hover::after {
     color: black; /* Ensure text color is black */
 }
 
+/* Styles for the Delete button */
+.delete-button {
+    padding: 0.3rem 0.6rem;
+    margin-left: 10px; /* Space between task info and delete button */
+    border: none;
+    border-radius: 4px;
+    background-color: #ff0000; /* Red background for delete button */
+    color: white; /* White text color */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+    background-color: #990000; /* Darker red on hover */
+}
+
+/* Additional styles for tasks */
+#tasks li,
+#done-tasks li,
+#missed-tasks li,
+#upcoming-tasks li {
+    display: flex;
+    align-items: center; /* Center align items in the task list */
+    justify-content: space-between; /* Space between task info and delete button */
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ddd;
+}
