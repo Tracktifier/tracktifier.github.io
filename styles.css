@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Montserrat', sans-serif; /* Changed to Montserrat */
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
@@ -8,11 +8,12 @@ body {
 }
 
 header {
-    background-color: #4CAF50;
+    background-color: #ff0000; /* Changed to red */
     color: white;
     text-align: center;
     padding: 1rem;
     border-bottom: 4px solid black;
+    font-family: 'Brush Script MT', cursive; /* Changed to Brush Script MT */
 }
 
 h1, h2 {
@@ -20,15 +21,18 @@ h1, h2 {
 }
 
 nav {
-    background-color: #4CAF50;
+    background-color: #000000; /* Changed to black */
     border: 2px solid black;
+    position: fixed; /* Fixed position for the navigation */
+    width: 200px; /* Fixed width for the navigation */
+    height: 100%; /* Full height for the navigation */
 }
 
 #tabs {
     display: flex;
+    flex-direction: column; /* Change to vertical layout */
     list-style: none;
     padding: 0;
-    justify-content: center;
 }
 
 .tab {
@@ -36,15 +40,16 @@ nav {
     cursor: pointer;
     border: 2px solid black;
     transition: background-color 0.3s;
+    color: white; /* White text for the tabs */
 }
 
 .tab:hover, .tab.active {
-    background-color: #2e7d32; /* Darker green for active and hover states */
-    color: white;
+    background-color: #990000; /* Darker red for active and hover states */
 }
 
 section {
-    margin: 2rem;
+    margin-left: 220px; /* Add margin to prevent overlap with the nav */
+    margin-top: 2rem;
 }
 
 #add-task {
@@ -63,7 +68,7 @@ section {
 
 #add-task button {
     padding: 0.5rem;
-    background-color: #4CAF50;
+    background-color: #ff0000; /* Changed to red */
     color: white;
     border: none;
     cursor: pointer;
@@ -71,7 +76,7 @@ section {
 }
 
 #add-task button:hover {
-    background-color: #2980b9;
+    background-color: #990000; /* Darker red on hover */
 }
 
 .tab-content {
@@ -102,7 +107,7 @@ section {
 footer {
     text-align: center;
     padding: 1rem;
-    background-color: #4CAF50;
+    background-color: #ff0000; /* Changed to red */
     color: white;
     position: fixed;
     width: 100%;
