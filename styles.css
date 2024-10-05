@@ -12,19 +12,39 @@ header {
     color: white;
     text-align: center;
     padding: 1rem;
+    border-bottom: 4px solid black;
 }
 
 h1, h2 {
     margin-bottom: 1rem;
 }
 
-section {
-    margin: 2rem;
+nav {
+    background-color: #4CAF50;
+    border: 2px solid black;
 }
 
-ul {
-    list-style-type: none;
+#tabs {
+    display: flex;
+    list-style: none;
     padding: 0;
+    justify-content: center;
+}
+
+.tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 2px solid black;
+    transition: background-color 0.3s;
+}
+
+.tab:hover, .tab.active {
+    background-color: #2e7d32; /* Darker green for active and hover states */
+    color: white;
+}
+
+section {
+    margin: 2rem;
 }
 
 #add-task {
@@ -32,17 +52,13 @@ ul {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-#add-task:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border: 2px solid black;
 }
 
 #add-task input, #add-task select {
     padding: 0.5rem;
     margin-right: 1rem;
+    border: 1px solid black;
 }
 
 #add-task button {
@@ -55,7 +71,19 @@ ul {
 }
 
 #add-task button:hover {
-    background-color: #2980b9; /* Change to a darker green or another color */
+    background-color: #2980b9;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+#task-list {
+    margin-top: 20px;
 }
 
 #task-list ul {
@@ -63,9 +91,10 @@ ul {
     padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid black;
 }
 
-#tasks li {
+#tasks li, #done-tasks li, #next-week-tasks li, #next-month-tasks li, #missed-tasks li, #upcoming-tasks li {
     padding: 0.5rem 0;
     border-bottom: 1px solid #ddd;
 }
