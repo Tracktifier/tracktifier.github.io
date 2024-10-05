@@ -6,8 +6,14 @@ const upcomingTasksList = document.getElementById('upcoming-tasks'); // Upcoming
 const tabs = document.querySelectorAll('.tab');
 const tabContents = document.querySelectorAll('.tab-content');
 
+// Set how many days in advance to notify (1 day in this example)
+const notifyDaysInAdvance = 1;
+
 // Load tasks from Local Storage on page load
-document.addEventListener('DOMContentLoaded', loadTasks);
+document.addEventListener('DOMContentLoaded', function() {
+    loadTasks();
+    checkDeadlines(); // Check deadlines when the page loads
+});
 
 taskForm.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -50,6 +56,25 @@ function loadTasks() {
         displayTask(task);
     });
 }
+
+// Function to check for upcoming deadlines
+function checkDeadlines() {
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    const currentDate = new Date();
+
+    tasks.forEach(task => {
+        const taskDeadline = new Date(`${task.deadline}T${task.time}`); // Combine date and time
+        const timeDiff = (taskDeadline - currentDate) / (1000 * 60 * 60 * 24); // Difference in days
+
+        // If the deadline is within the specified notifyDaysInAdvance and the task is not done
+        if (timeDiff <= notifyDaysInAdvance && !task.done) {
+            alert(`Reminder: The deadline for "${task.name}" is in ${Math.ceil(timeDiff)} day(s)!`);
+        }
+    });
+}
+
+// Call checkDeadlines periodically (every hour in this example)
+setInterval(checkDeadlines, 60 * 60 * 1000); // Check every hour
 
 function displayTasks() {
     // Clear the lists
