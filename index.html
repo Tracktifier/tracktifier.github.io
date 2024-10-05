@@ -21,13 +21,13 @@
         </ul>
     </section>
 
-  <section id="add-task">
+<section id="add-task">
     <h2>Add a Task</h2>
     <form id="task-form">
-        <input type="text" id="task-name" placeholder="Task Name" required>
-        <input type="date" id="task-deadline" required>
-        <input type="time" id="task-time" required>
-        <select id="task-type" required>
+        <input type="text" id="task-name" placeholder="Task Name (e.g., Homework)" required title="Please input the task name here.">
+        <input type="date" id="task-deadline" required title="Please select the deadline for your task.">
+        <input type="time" id="task-time" required title="Please select the time for your task deadline.">
+        <select id="task-type" required title="Select the type of task to set specific reminders.">
             <option value="">Select Task Type</option>
             <option value="large">Large Project</option>
             <option value="medium">Medium Task</option>
@@ -37,6 +37,7 @@
         <button type="submit">Add Task</button>
     </form>
 </section>
+
 
 
     <section id="task-list">
