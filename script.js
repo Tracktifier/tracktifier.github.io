@@ -4,23 +4,26 @@ const doneTasksList = document.getElementById('done-tasks');
 const tabs = document.querySelectorAll('.tab');
 const tabContents = document.querySelectorAll('.tab-content');
 
-taskForm.addEventListener('submit', function(event) {
-    event.preventDefault();
+taskForm.addEventListener('submit', function(e) {
+    e.preventDefault();
 
     const taskName = document.getElementById('task-name').value;
     const taskDeadline = document.getElementById('task-deadline').value;
-    const taskTime = document.getElementById('task-time').value;
-    const taskType = document.getElementById('task-type').value;
+    const taskTime = document.getElementById('task-time').value; // Added time
+    const taskType = document.getElementById('task-type').value; // Added task type
 
-    const taskItem = document.createElement('li');
-    taskItem.innerHTML = `
-        <input type="checkbox" onchange="markAsDone(this)"> 
-        ${taskName} - ${taskDeadline} ${taskTime} (${taskType})`;
-
-    tasksList.appendChild(taskItem);
-
-    // Clear input fields
-    taskForm.reset();
+    if (taskName && taskDeadline) {
+        const taskItem = document.createElement('li');
+        taskItem.innerHTML = `
+            <input type="checkbox" onchange="markAsDone(this)"> 
+            ${taskName} - Deadline: ${taskDeadline} ${taskTime} (${taskType})
+        `;
+        
+        tasksList.appendChild(taskItem);
+        taskForm.reset();
+    } else {
+        alert("Please fill out both fields.");
+    }
 });
 
 function markAsDone(checkbox) {
