@@ -2,7 +2,7 @@ body {
     font-family: 'Montserrat', sans-serif; /* Changed to Montserrat */
     margin: 0;
     padding: 0;
-    background-color: #ffcccb; /* Light red background color */
+    background-color: #ffccc; /* Light red background color */
     color: #333;
     transition: background-color 0.3s;
 }
@@ -21,7 +21,7 @@ h1, h2 {
 }
 
 nav {
-    background-color: #000000; /* Changed to black */
+    background-color: #F5F5DC; /* Changed to black */
     border: 2px solid black;
     position: fixed; /* Fixed position for the navigation */
     width: 200px; /* Fixed width for the navigation */
