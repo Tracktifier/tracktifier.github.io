@@ -161,7 +161,7 @@ function showTab(tabId) {
 
 // Scheduling notifications for tasks
 function scheduleNotification(task) {
-    const taskDeadlineDateTime = new Date(`${task.deadline}T${task.time}`); // Create Date object for task deadline
+    const taskDeadlineDateTime = new Date(`${task.deadline}T${task.time}`);
     let notificationTime;
 
     switch (task.type) {
@@ -181,12 +181,15 @@ function scheduleNotification(task) {
             return;
     }
 
+    // Debugging log
+    console.log(`Task: ${task.name}, Notification Time: ${notificationTime}, Current Time: ${new Date()}`);
+
     // Schedule the notification
     if (notificationTime > new Date()) {
         setTimeout(() => {
             new Notification("Tracktifier Reminder", {
                 body: `${task.name} is due soon!`,
-                icon: 'icon.png' // Optional: Add an icon
+                icon: 'icon.png'
             });
         }, notificationTime.getTime() - Date.now());
     }
