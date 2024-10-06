@@ -227,22 +227,61 @@ select[title]:hover::after {
     border-bottom: 1px solid #ddd;
 }
 
+/* Modified Loader - Representing "Tasks Being Tracked" */
 .loader {
-    border: 16px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 16px solid #3498db;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: none; /* Hidden by default */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* Dark overlay to highlight the loader */
+    z-index: 1000;
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.loader .circle {
+    width: 30px;
+    height: 30px;
+    background-color: #3498db;
+    border-radius: 50%;
+    position: absolute;
+    animation: circleMove 2s infinite ease-in-out;
 }
 
+.loader .circle:nth-child(2) {
+    background-color: #ff69b4;
+    animation-delay: 0.2s;
+}
+
+.loader .circle:nth-child(3) {
+    background-color: #9370db;
+    animation-delay: 0.4s;
+}
+
+/* Circle movement to represent tasks being tracked */
+@keyframes circleMove {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* Fade-in animation for page content after loader disappears */
+@keyframes fadeInContent {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+body.loading .content {
+    opacity: 0;
+    animation: fadeInContent 0.5s forwards 0.5s;
+}
