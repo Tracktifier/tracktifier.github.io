@@ -1,8 +1,10 @@
 const taskForm = document.getElementById('task-form');
-const tasksList = document.getElementById('tasks');
+const tasksList = document.getElementById('tasks'); // Today's tasks
 const doneTasksList = document.getElementById('done-tasks');
 const missedTasksList = document.getElementById('missed-tasks'); // Missed tasks list
 const upcomingTasksList = document.getElementById('upcoming-tasks'); // Upcoming tasks list
+const nextWeekList = document.getElementById('next-week-tasks'); // Next week tasks list
+const nextMonthList = document.getElementById('next-month-tasks'); // Next month tasks list
 const tabs = document.querySelectorAll('.tab');
 const tabContents = document.querySelectorAll('.tab-content');
 
@@ -32,7 +34,7 @@ taskForm.addEventListener('submit', function (e) {
         // Reset the form
         taskForm.reset();
     } else {
-        alert("Please fill out both fields.");
+        alert("Please fill out all fields.");
     }
 });
 
@@ -57,21 +59,28 @@ function displayTasks() {
     doneTasksList.innerHTML = '';
     missedTasksList.innerHTML = ''; // Clear missed tasks list
     upcomingTasksList.innerHTML = '';
+    nextWeekList.innerHTML = ''; // Clear next week tasks list
+    nextMonthList.innerHTML = ''; // Clear next month tasks list
 
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     const currentDateTime = new Date(); // Get current date and time
 
     tasks.forEach(task => {
         const taskDeadlineDateTime = new Date(`${task.deadline}T${task.time}`); // Create a Date object for the task's deadline
-
         const taskElement = createTaskElement(task); // Create task element once
 
         if (task.done) {
             doneTasksList.appendChild(taskElement); // Add to done tasks if marked as done
         } else {
+            const daysUntilDeadline = (taskDeadlineDateTime - currentDateTime) / (1000 * 60 * 60 * 24); // Calculate the days difference
+
             if (taskDeadlineDateTime < currentDateTime) {
                 // If the task's deadline is missed
                 missedTasksList.appendChild(taskElement); // Add to missed tasks
+            } else if (daysUntilDeadline <= 7) {
+                nextWeekList.appendChild(taskElement.cloneNode(true)); // Add to next week tasks if within 7 days
+            } else if (daysUntilDeadline <= 30) {
+                nextMonthList.appendChild(taskElement.cloneNode(true)); // Add to next month tasks if within 30 days
             } else {
                 tasksList.appendChild(taskElement); // Add to main task list if not done
                 upcomingTasksList.appendChild(taskElement.cloneNode(true)); // Add a copy to upcoming tasks
@@ -118,9 +127,10 @@ function deleteTask(taskName) {
 
 // Tab functionality
 function showTab(tabId) {
-    tabs.forEach(tab => tab.classList.remove('active'));
-    tabContents.forEach(content => content.classList.remove('active'));
+    tabs.forEach(tab => tab.classList.remove('active')); // Remove active class from all tabs
+    tabContents.forEach(content => content.classList.remove('active')); // Hide all tab contents
 
+    // Add active class to the clicked tab and its corresponding content
     document.querySelector(`.tab-content#${tabId}`).classList.add('active');
     document.querySelector(`.tab.${tabId}`).classList.add('active');
 }
