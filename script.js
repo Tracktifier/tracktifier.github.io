@@ -8,7 +8,33 @@ const nextMonthList = document.getElementById('next-month-tasks'); // This month
 const tabs = document.querySelectorAll('.tab');
 const tabContents = document.querySelectorAll('.tab-content');
 
-// Request notification permissions on page load
+function showLoader() {
+    document.getElementById('loader').style.display = 'block';
+}
+
+function hideLoader() {
+    document.getElementById('loader').style.display = 'none';
+}
+
+function loadTasks() {
+    showLoader(); // Show loader while loading tasks
+    
+    setTimeout(() => { // Simulate delay (if necessary) to see loader in action
+        const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        tasks.forEach(task => {
+            // Schedule notifications for each task
+            if (!task.done) {
+                scheduleNotification(task);
+            }
+        });
+        
+        // Call displayTasks to render the loaded tasks
+        displayTasks(tasks);
+
+        hideLoader(); // Hide loader after tasks are loaded
+    }, 1000); // Delay to simulate loading time (optional)
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     if (Notification.permission !== "granted") {
         Notification.requestPermission().then(permission => {
