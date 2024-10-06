@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // Load tasks from Local Storage on page load
 document.addEventListener('DOMContentLoaded', loadTasks);
 
-
 taskForm.addEventListener('submit', function (e) {
     e.preventDefault();
 
@@ -169,16 +168,16 @@ function scheduleNotification(task) {
 
     switch (task.type) {
         case 'large':
-            notificationTime = timeUntilDeadline - 7 * 24 * 60 * 60 * 1000; // 1 week before
-            break;
-        case 'medium':
-            notificationTime = timeUntilDeadline - 3 * 24 * 60 * 60 * 1000; // 3 days before
-            break;
-        case 'small':
             notificationTime = timeUntilDeadline - 24 * 60 * 60 * 1000; // 1 day before
             break;
+        case 'medium':
+            notificationTime = timeUntilDeadline - 3 * 60 * 60 * 1000; // 3 hours before
+            break;
+        case 'small':
+            notificationTime = timeUntilDeadline - 1 * 60 * 60 * 1000; // 1 hour before
+            break;
         case 'group':
-            notificationTime = timeUntilDeadline - 5 * 24 * 60 * 60 * 1000; // 3-5 days before
+            notificationTime = timeUntilDeadline - 5 * 24 * 60 * 60 * 1000; // 5 days before
             break;
         default:
             return;
