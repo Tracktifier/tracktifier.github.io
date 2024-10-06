@@ -19,10 +19,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+    
+    // Load tasks from Local Storage on page load
+    loadTasks();
 });
-
-// Load tasks from Local Storage on page load
-document.addEventListener('DOMContentLoaded', loadTasks);
 
 taskForm.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -65,18 +65,17 @@ function saveTask(task) {
 function loadTasks() {
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     tasks.forEach(task => {
-        displayTask(task);
         // Schedule notifications for each task
         if (!task.done) {
             scheduleNotification(task);
         }
     });
-
-    // After loading tasks, display them immediately
-    displayTasks();
+    
+    // Call displayTasks to render the loaded tasks
+    displayTasks(tasks);
 }
 
-function displayTasks() {
+function displayTasks(tasks) {
     // Clear the lists
     tasksList.innerHTML = '';
     doneTasksList.innerHTML = '';
@@ -85,7 +84,6 @@ function displayTasks() {
     nextWeekList.innerHTML = ''; // Clear next week tasks list
     nextMonthList.innerHTML = ''; // Clear next month tasks list
 
-    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     const currentDateTime = new Date(); // Get current date and time
 
     tasks.forEach(task => {
@@ -140,7 +138,7 @@ function markAsDone(checkbox) {
     });
 
     localStorage.setItem('tasks', JSON.stringify(updatedTasks)); // Update Local Storage
-    displayTasks(); // Refresh the task display
+    displayTasks(updatedTasks); // Refresh the task display
 }
 
 function deleteTask(taskName) {
@@ -149,7 +147,7 @@ function deleteTask(taskName) {
     const updatedTasks = tasks.filter(task => task.name !== taskName); // Remove the task
 
     localStorage.setItem('tasks', JSON.stringify(updatedTasks)); // Update Local Storage
-    displayTasks(); // Refresh the task display
+    displayTasks(updatedTasks); // Refresh the task display
 }
 
 // Tab functionality
