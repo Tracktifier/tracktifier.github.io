@@ -56,11 +56,14 @@ function saveTask(task) {
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     tasks.push(task); // Add the new task
     localStorage.setItem('tasks', JSON.stringify(tasks)); // Save back to Local Storage
-    displayTasks(); // Update the task display
+    
+    // Update the task display with the newly added task
+    displayTasks(tasks); // Pass the updated task list directly
 
     // Set up notifications for the new task
     scheduleNotification(task);
 }
+
 
 function loadTasks() {
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
