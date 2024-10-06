@@ -17,6 +17,11 @@ header {
     animation: bounce 2s infinite; /* Add bounce animation */
 }
 
+#header-image {
+    width: 100px;
+    height: 100px;
+}
+
 @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
         transform: translateY(0); /* Start position */
