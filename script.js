@@ -1,10 +1,10 @@
 const taskForm = document.getElementById('task-form');
-const tasksList = document.getElementById('tasks'); // Today's tasks
+const tasksList = document.getElementById('tasks'); // Your tasks
 const doneTasksList = document.getElementById('done-tasks');
 const missedTasksList = document.getElementById('missed-tasks'); // Missed tasks list
 const upcomingTasksList = document.getElementById('upcoming-tasks'); // Upcoming tasks list
-const nextWeekList = document.getElementById('next-week-tasks'); // Next week tasks list
-const nextMonthList = document.getElementById('next-month-tasks'); // Next month tasks list
+const nextWeekList = document.getElementById('next-week-tasks'); // This week tasks list
+const nextMonthList = document.getElementById('next-month-tasks'); // This month tasks list
 const tabs = document.querySelectorAll('.tab');
 const tabContents = document.querySelectorAll('.tab-content');
 
@@ -92,18 +92,22 @@ function displayTasks() {
         if (task.done) {
             doneTasksList.appendChild(taskElement); // Add to done tasks if marked as done
         } else {
-            const daysUntilDeadline = (taskDeadlineDateTime - currentDateTime) / (1000 * 60 * 60 * 24); // Calculate the days difference
+            const daysUntilDeadline = Math.floor((taskDeadlineDateTime - currentDateTime) / (1000 * 60 * 60 * 24)); // Calculate the days difference
 
+            // Add to "Your Tasks" tab
+            tasksList.appendChild(taskElement.cloneNode(true)); // Add to main task list
+
+            // Check if the task's deadline is missed
             if (taskDeadlineDateTime < currentDateTime) {
-                // If the task's deadline is missed
-                missedTasksList.appendChild(taskElement); // Add to missed tasks
-            } else if (daysUntilDeadline <= 7) {
-                nextWeekList.appendChild(taskElement.cloneNode(true)); // Add to next week tasks if within 7 days
-            } else if (daysUntilDeadline <= 30) {
-                nextMonthList.appendChild(taskElement.cloneNode(true)); // Add to next month tasks if within 30 days
-            } else {
-                tasksList.appendChild(taskElement); // Add to main task list if not done
-                upcomingTasksList.appendChild(taskElement.cloneNode(true)); // Add a copy to upcoming tasks
+                missedTasksList.appendChild(taskElement.cloneNode(true)); // Add to missed tasks
+            } 
+            // Check if the task's deadline is within this week
+            else if (daysUntilDeadline >= 0 && daysUntilDeadline < 7) {
+                nextWeekList.appendChild(taskElement.cloneNode(true)); // Add to this week's tasks if within 7 days
+            } 
+            // Check if the task's deadline is within this month
+            else if (daysUntilDeadline >= 7 && daysUntilDeadline < 30) {
+                nextMonthList.appendChild(taskElement.cloneNode(true)); // Add to this month's tasks if within 30 days
             }
         }
     });
@@ -152,50 +156,38 @@ function showTab(tabId) {
 
     // Add active class to the clicked tab and its corresponding content
     document.querySelector(`.tab-content#${tabId}`).classList.add('active');
-    document.querySelector(`.tab.${tabId}`).classList.add('active');
+    document.querySelector(`.tab#${tabId}`).classList.add('active');
 }
 
-// Initialize the default active tab
-showTab('today');
-
-// Schedule notifications for tasks
+// Scheduling notifications for tasks
 function scheduleNotification(task) {
-    const currentDateTime = new Date();
-    const taskDeadlineDateTime = new Date(`${task.deadline}T${task.time}`);
-    const timeUntilDeadline = taskDeadlineDateTime - currentDateTime;
-
-    let notificationTime = 0;
+    const taskDeadlineDateTime = new Date(`${task.deadline}T${task.time}`); // Create Date object for task deadline
+    let notificationTime;
 
     switch (task.type) {
         case 'large':
-            notificationTime = timeUntilDeadline - 24 * 60 * 60 * 1000; // 1 day before
+            notificationTime = new Date(taskDeadlineDateTime.getTime() - (24 * 60 * 60 * 1000)); // 1 day before
             break;
         case 'medium':
-            notificationTime = timeUntilDeadline - 3 * 60 * 60 * 1000; // 3 hours before
+            notificationTime = new Date(taskDeadlineDateTime.getTime() - (3 * 60 * 60 * 1000)); // 3 hours before
             break;
         case 'small':
-            notificationTime = timeUntilDeadline - 1 * 60 * 60 * 1000; // 1 hour before
+            notificationTime = new Date(taskDeadlineDateTime.getTime() - (1 * 60 * 60 * 1000)); // 1 hour before
             break;
         case 'group':
-            notificationTime = timeUntilDeadline - 5 * 24 * 60 * 60 * 1000; // 5 days before
+            notificationTime = new Date(taskDeadlineDateTime.getTime() - (5 * 24 * 60 * 60 * 1000)); // 5 days before
             break;
         default:
             return;
     }
 
-    if (notificationTime > 0) {
+    // Schedule the notification
+    if (notificationTime > new Date()) {
         setTimeout(() => {
-            showNotification(task);
-        }, notificationTime);
-    }
-}
-
-// Display notifications
-function showNotification(task) {
-    if (Notification.permission === 'granted') {
-        new Notification(`Upcoming Task: ${task.name}`, {
-            body: `Deadline: ${task.deadline} at ${task.time} (${task.type})`,
-            icon: 'notification-icon.png' // Set the path to your notification icon
-        });
+            new Notification("Tracktifier Reminder", {
+                body: `${task.name} is due soon!`,
+                icon: 'icon.png' // Optional: Add an icon
+            });
+        }, notificationTime.getTime() - Date.now());
     }
 }
