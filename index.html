@@ -30,13 +30,21 @@
             <input type="text" id="task-name" placeholder="Task Name (e.g., Homework)" required title="Please input the task name here.">
             <input type="date" id="task-deadline" required title="Please select the deadline for your task.">
             <input type="time" id="task-time" required title="Please select the time for your task deadline.">
+            <label for="task-type">Task Type:</label>
             <select id="task-type" required title="Select the type of task to set specific reminders.">
                 <option value="">Select Task Type</option>
-                <option value="large">Large Project</option>
-                <option value="medium">Medium Task</option>
-                <option value="small">Small Task</option>
-                <option value="group">Group Task</option>
+                <option value="large">Large Project (Reminder 1 day before)</option>
+                <option value="medium">Medium Task (Reminder 3 hours before)</option>
+                <option value="small">Small Task (Reminder 1 hour before)</option>
+                <option value="group">Group Task (Reminder 5 days before)</option>
             </select>
+            <p style="font-size: 0.9em; color: gray;">Notifications will pop up based on the task type you choose:</p>
+            <ul style="font-size: 0.9em; color: gray;">
+                <li><b>Large Project:</b> 1 day before deadline</li>
+                <li><b>Medium Task:</b> 3 hours before deadline</li>
+                <li><b>Small Task:</b> 1 hour before deadline</li>
+                <li><b>Group Task:</b> 5 days before deadline</li>
+            </ul>
             <button type="submit">Add Task</button>
         </form>
     </section>
@@ -85,7 +93,14 @@
 
             <b>Stay On Track with Notifications</b><br>
             One of the standout features of Tracktifier is its real-time notification system. Tracktifier will send you notifications to remind you of approaching deadlines based on the type of task. 
-            For small tasks, you'll receive a reminder one hour before the deadline, while for large projects, you'll get a reminder one day in advance. Make sure to allow notifications in your browser to stay on top of your deadlines!
+            Here’s how it works:
+            <ul style="font-size: 0.9em;">
+                <li><b>Small tasks:</b> Notification 1 hour before the deadline.</li>
+                <li><b>Medium tasks:</b> Notification 3 hours before the deadline.</li>
+                <li><b>Large projects:</b> Notification 1 day before the deadline.</li>
+                <li><b>Group tasks:</b> Notification 5 days before the deadline.</li>
+            </ul>
+            Make sure to allow notifications in your browser to stay on top of your deadlines!
             <br><br>
 
             <b>Explore Tabs for Organized Viewing</b><br>
