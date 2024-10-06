@@ -8,8 +8,22 @@ const nextMonthList = document.getElementById('next-month-tasks'); // Next month
 const tabs = document.querySelectorAll('.tab');
 const tabContents = document.querySelectorAll('.tab-content');
 
+// Request notification permissions on page load
+document.addEventListener('DOMContentLoaded', function() {
+    if (Notification.permission !== "granted") {
+        Notification.requestPermission().then(permission => {
+            if (permission === "granted") {
+                console.log("Notifications permission granted.");
+            } else {
+                console.log("Notifications permission denied.");
+            }
+        });
+    }
+});
+
 // Load tasks from Local Storage on page load
 document.addEventListener('DOMContentLoaded', loadTasks);
+
 
 taskForm.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -19,7 +33,7 @@ taskForm.addEventListener('submit', function (e) {
     const taskTime = document.getElementById('task-time').value; // Added time
     const taskType = document.getElementById('task-type').value; // Added task type
 
-    if (taskName && taskDeadline) {
+    if (taskName && taskDeadline && taskTime && taskType) {
         const task = {
             name: taskName,
             deadline: taskDeadline,
@@ -44,12 +58,19 @@ function saveTask(task) {
     tasks.push(task); // Add the new task
     localStorage.setItem('tasks', JSON.stringify(tasks)); // Save back to Local Storage
     displayTasks(); // Update the task display
+
+    // Set up notifications for the new task
+    scheduleNotification(task);
 }
 
 function loadTasks() {
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     tasks.forEach(task => {
         displayTask(task);
+        // Schedule notifications for each task
+        if (!task.done) {
+            scheduleNotification(task);
+        }
     });
 }
 
@@ -137,3 +158,45 @@ function showTab(tabId) {
 
 // Initialize the default active tab
 showTab('today');
+
+// Schedule notifications for tasks
+function scheduleNotification(task) {
+    const currentDateTime = new Date();
+    const taskDeadlineDateTime = new Date(`${task.deadline}T${task.time}`);
+    const timeUntilDeadline = taskDeadlineDateTime - currentDateTime;
+
+    let notificationTime = 0;
+
+    switch (task.type) {
+        case 'large':
+            notificationTime = timeUntilDeadline - 7 * 24 * 60 * 60 * 1000; // 1 week before
+            break;
+        case 'medium':
+            notificationTime = timeUntilDeadline - 3 * 24 * 60 * 60 * 1000; // 3 days before
+            break;
+        case 'small':
+            notificationTime = timeUntilDeadline - 24 * 60 * 60 * 1000; // 1 day before
+            break;
+        case 'group':
+            notificationTime = timeUntilDeadline - 5 * 24 * 60 * 60 * 1000; // 3-5 days before
+            break;
+        default:
+            return;
+    }
+
+    if (notificationTime > 0) {
+        setTimeout(() => {
+            showNotification(task);
+        }, notificationTime);
+    }
+}
+
+// Display notifications
+function showNotification(task) {
+    if (Notification.permission === 'granted') {
+        new Notification(`Upcoming Task: ${task.name}`, {
+            body: `Deadline: ${task.deadline} at ${task.time} (${task.type})`,
+            icon: 'notification-icon.png' // Set the path to your notification icon
+        });
+    }
+}
