@@ -184,13 +184,17 @@ function scheduleNotification(task) {
     // Debugging log
     console.log(`Task: ${task.name}, Notification Time: ${notificationTime}, Current Time: ${new Date()}`);
 
-    // Schedule the notification
+    // Schedule the notification only if the calculated notification time is in the future
     if (notificationTime > new Date()) {
+        const timeout = notificationTime.getTime() - Date.now();
         setTimeout(() => {
             new Notification("Tracktifier Reminder", {
                 body: `${task.name} is due soon!`,
                 icon: 'icon.png'
             });
-        }, notificationTime.getTime() - Date.now());
+        }, timeout);
+    } else {
+        console.log(`Notification for ${task.name} is set in the past and will not be scheduled.`);
     }
 }
+
