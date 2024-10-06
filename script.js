@@ -71,6 +71,9 @@ function loadTasks() {
             scheduleNotification(task);
         }
     });
+
+    // After loading tasks, display them immediately
+    displayTasks();
 }
 
 function displayTasks() {
@@ -197,4 +200,3 @@ function scheduleNotification(task) {
         console.log(`Notification for ${task.name} is set in the past and will not be scheduled.`);
     }
 }
-
